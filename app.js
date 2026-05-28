@@ -1177,7 +1177,7 @@ function renderOffer() {
           <p><strong>${textValue("clientContact") || "Telefon lub e-mail do uzupełnienia"}</strong></p>
         </div>
         <div class="meta-card">
-          <h3>Przedstawiciel Handlowy</h3>
+          <h3>Kierownik</h3>
           <p>
             <strong>${representative.name}</strong><br />
             tel. ${representative.phone}<br />
@@ -1268,7 +1268,7 @@ function renderOffer() {
 
       <section class="offer-notes-grid">
         <div>
-          <strong>Przedstawiciel handlowy</strong><br />
+          <strong>Kierownik</strong><br />
           ${representative.name}<br />
           tel. ${representative.phone}<br />
           e-mail: ${representative.email}
