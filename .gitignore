@@ -1,0 +1,6 @@
+.agents/
+.codex/
+.vercel/
+node_modules/
+*.log
+.vercel

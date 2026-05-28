@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generator ofert Piotrek</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Generator oferty">
+        <header class="topbar no-print">
+          <div class="brand">
+            <div class="brand-mark">S</div>
+            <div>
+              <p>Solid Security</p>
+              <h1>Generator ofert Piotrek</h1>
+            </div>
+          </div>
+          <button class="primary-action" id="printOffer" type="button">PDF</button>
+        </header>
+
+        <form class="config-panel no-print" id="offerForm">
+          <section class="panel-section">
+            <div class="section-heading">
+              <span>1</span>
+              <h2>Klient i oferta</h2>
+            </div>
+            <label>
+              Telefon lub e-mail klienta
+              <input id="clientContact" type="text" placeholder="np. 500 600 700 albo klient@email.pl" />
+            </label>
+            <label>
+              Nazwa projektu
+              <input id="projectName" type="text" placeholder="np. Dom Kowalskich" />
+            </label>
+            <label>
+              Numer oferty
+              <input id="offerNumber" type="text" />
+            </label>
+            <div class="history-actions">
+              <button class="small-action" id="saveProject" type="button">Zapisz projekt</button>
+              <button class="ghost-action" id="newProject" type="button">Nowy</button>
+            </div>
+            <label>
+              Szukaj zapisanych projektów
+              <input id="projectSearch" type="search" placeholder="klient, projekt lub nr oferty" autocomplete="off" />
+            </label>
+            <div class="project-history" id="projectHistory"></div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-heading">
+              <span>2</span>
+              <h2>Szablony</h2>
+            </div>
+            <div class="history-actions">
+              <button class="small-action" id="saveTemplate" type="button">Zapisz szablon</button>
+              <button class="ghost-action" id="loadTemplate" type="button">Szablony</button>
+            </div>
+            <label>
+              Nazwa szablonu
+              <input id="templateName" type="text" placeholder="np. dom jednorodzinny 3 czujki" />
+            </label>
+            <div class="project-history" id="templateHistory"></div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-heading">
+              <div class="section-title">
+                <span>3</span>
+                <h2>Pozycje z cennika</h2>
+              </div>
+              <button class="collapse-action" id="toggleCatalogSection" type="button" aria-expanded="true" aria-controls="catalogSectionBody">Zwiń</button>
+            </div>
+            <div class="collapsible-body" id="catalogSectionBody">
+              <label>
+                Szukaj po indeksie lub nazwie
+                <input id="catalogSearch" type="search" placeholder="np. DG75, satel duo slim, puste" autocomplete="off" />
+              </label>
+              <div class="catalog-results" id="catalogResults"></div>
+              <div class="extra-items" id="extraItemsEditor"></div>
+            </div>
+          </section>
+
+          <section class="panel-section summary-section">
+            <div class="section-heading">
+              <span>4</span>
+              <h2>Podsumowanie</h2>
+            </div>
+            <div class="accessory-options" id="accessoryOptions"></div>
+            <div class="grid-2">
+              <label>
+                VAT
+                <select id="vatRate">
+                  <option value="0.08">8%</option>
+                  <option value="0.23" selected>23%</option>
+                </select>
+              </label>
+              <label>
+                Rabat od cennika
+                <input id="discount" type="number" min="0" max="100" inputmode="decimal" value="0" />
+              </label>
+              <label>
+                Abonament miesięczny brutto
+                <input id="monthlyFee" type="number" min="0" inputmode="decimal" placeholder="np. 99" />
+              </label>
+            </div>
+          </section>
+        </form>
+      </section>
+
+      <section class="offer-preview" id="offerPreview" aria-label="Podgląd oferty"></section>
+    </main>
+
+    <script src="vendor/html2pdf.bundle.min.js"></script>
+    <script src="cennik-data.js"></script>
+    <script src="custom-cennik.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
