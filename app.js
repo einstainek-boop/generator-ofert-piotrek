@@ -55,9 +55,9 @@ const panelAccessories = [
 ];
 
 const representative = {
-  name: "Bartosz Węglarz",
-  phone: "696-010-285",
-  email: "bweglarz@solidsecurity.pl",
+  name: "Piotr Półtorak",
+  phone: "665-004-419",
+  email: "ppoltorak@solidsecurity.pl",
 };
 
 const company = {
