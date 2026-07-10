@@ -752,6 +752,8 @@ textarea {
   justify-content: end;
   gap: 14px;
   margin-top: 22px;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .valuation-card {
@@ -814,8 +816,8 @@ textarea {
 
 .summary-row {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 12px;
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
   font-size: 14px;
@@ -827,6 +829,9 @@ textarea {
 
 .summary-row strong {
   color: var(--ink);
+  min-width: 0;
+  overflow: visible;
+  white-space: nowrap;
 }
 
 .summary-row.total {
@@ -919,9 +924,81 @@ body.exporting-pdf .offer-preview {
 }
 
 body.exporting-pdf .offer-preview article {
-  padding: 22px;
+  padding: 14px 22px;
   border-radius: 0;
   background: #fff8f9;
+}
+
+body.exporting-pdf .offer-banner-strip {
+  margin: -4px 0 10px;
+  padding-bottom: 8px;
+}
+
+body.exporting-pdf .offer-header {
+  padding: 14px;
+}
+
+body.exporting-pdf .meta-grid {
+  margin: 14px 0;
+}
+
+body.exporting-pdf .meta-card {
+  min-height: 90px;
+  padding: 12px;
+}
+
+body.exporting-pdf .items-table td {
+  padding: 8px;
+}
+
+body.exporting-pdf .items-table tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+body.exporting-pdf .items-table thead {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+body.exporting-pdf .summary-box {
+  justify-content: stretch;
+  gap: 10px;
+  margin-top: 14px;
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+body.exporting-pdf .summary-table {
+  width: 100%;
+  max-width: none;
+}
+
+body.exporting-pdf .summary-row {
+  grid-template-columns: minmax(0, 1fr) max-content;
+}
+
+body.exporting-pdf .summary-row strong {
+  white-space: nowrap;
+}
+
+body.exporting-pdf .service-notes {
+  gap: 6px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+body.exporting-pdf .offer-notes-grid {
+  margin-top: 16px;
+  padding-top: 12px;
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+body.exporting-pdf .fineprint {
+  margin-top: 10px;
 }
 
 body.exporting-pdf .no-print {

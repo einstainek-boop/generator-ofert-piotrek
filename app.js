@@ -66,6 +66,7 @@ const company = {
 };
 
 const DEFAULT_CONTROL_PANEL_ID = "pulson";
+const MONTHLY_FEE_VAT_RATE = 0.23;
 const formIds = ["clientContact", "projectName", "offerNumber", "vatRate", "discount", "monthlyFee"];
 
 const state = {};
@@ -107,6 +108,10 @@ function formatMoney(value) {
 
 function roundUpToFullTens(value) {
   return value > 0 ? Math.ceil(value / 10) * 10 : 0;
+}
+
+function monthlyFeeGross(monthlyFeeNet) {
+  return monthlyFeeNet * (1 + MONTHLY_FEE_VAT_RATE);
 }
 
 function todayIso() {
@@ -511,7 +516,7 @@ function applyTemplateState(template) {
   renderOffer();
 }
 
-function saveProject({ silent = false } = {}) {
+function saveProject({ silent = false, noAlert = false } = {}) {
   readState();
   const typedKey = projectKey();
   const key = silent ? currentProjectKey : typedKey || currentProjectKey;
@@ -527,7 +532,7 @@ function saveProject({ silent = false } = {}) {
   }
 
   if (!key) {
-    if (!silent) {
+    if (!silent && !noAlert) {
       alert("Wpisz nazwę projektu albo telefon/e-mail klienta, żeby zapisać projekt.");
     }
     return;
@@ -1135,7 +1140,10 @@ function renderOffer() {
   const vatValue = clientSubtotalNet * Number(state.vatRate);
   const gross = clientSubtotalNet + vatValue;
   const warrantyExtensionCost = gross * 0.13;
-  const monthlyFeeText = state.monthlyFee > 0 ? `${formatMoney(state.monthlyFee)} brutto.` : "...";
+  const monthlyFeeText =
+    state.monthlyFee > 0
+      ? `${formatMoney(monthlyFeeGross(state.monthlyFee))} brutto (23% VAT).`
+      : "...";
   const valuationRows = valuationItems
     .map(
       (item) => `
@@ -1322,6 +1330,8 @@ function renderOffer() {
 }
 
 async function generatePdf() {
+  // zapis projektu przy generowaniu PDF, żeby można było do niego wrócić
+  saveProject({ noAlert: true });
   renderOffer();
   const button = document.getElementById("printOffer");
   const element = document.getElementById("offerPreview");
@@ -1338,6 +1348,7 @@ async function generatePdf() {
   button.disabled = true;
   button.textContent = "...";
   document.body.classList.add("exporting-pdf");
+  window.scrollTo(0, 0);
 
   try {
     await window
@@ -1346,9 +1357,12 @@ async function generatePdf() {
         margin: [7, 7, 7, 7],
         filename: `${filename}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: ["css", "legacy"] },
+        pagebreak: {
+          mode: ["css", "legacy"],
+          avoid: [".items-table tr", ".summary-box", ".service-notes", ".offer-notes-grid"],
+        },
       })
       .from(element)
       .save();
